@@ -1,0 +1,15 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Scan image
+        uses: anchore/scan-action@v1.0.4
+        with:
+          image-reference: "alpine:latest"
