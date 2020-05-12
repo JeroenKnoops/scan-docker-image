@@ -15,6 +15,10 @@ jobs:
           image-reference: "alpine:latest"
       - name: anchore inline scan JSON results
         run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+      - uses: actions/upload-artifact@v2
+        with:
+          name: anchore-output
+          path: anchore-reports
         
   tern:
     runs-on: ubuntu-latest
@@ -36,6 +40,6 @@ jobs:
           ./docker_run.sh workdir ternd "report -f json -i alpine:3.10.4" > ${{ github.workspace }}/artifact/alpine.txt
       - uses: actions/upload-artifact@v2
         with:
-          name: output
+          name: tern-output
           path: ${{ github.workspace }}/artifact
 
