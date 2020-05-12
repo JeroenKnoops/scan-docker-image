@@ -1,0 +1,20 @@
+name: scan
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  anchore:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Scan image
+        uses: anchore/scan-action@v1.0.4
+        with:
+          image-reference: "alpine:latest"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: anchore-output
+          path: anchore-reports
+
