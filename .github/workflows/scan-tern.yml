@@ -1,25 +1,9 @@
-name: scan
+name: scan tern
 
 on:
   push:
-    branches: [ master ]
 
 jobs:
-  anchore:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Scan image
-        uses: anchore/scan-action@v1.0.4
-        with:
-          image-reference: "alpine:latest"
-      - name: anchore inline scan JSON results
-        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
-      - uses: actions/upload-artifact@v2
-        with:
-          name: anchore-output
-          path: anchore-reports
-        
   tern:
     runs-on: ubuntu-latest
 
