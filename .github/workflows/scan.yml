@@ -14,7 +14,8 @@ jobs:
         with:
           image-reference: "alpine:latest"
       - name: anchore inline scan JSON results
-        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; don
+        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+        
   tern:
     runs-on: ubuntu-latest
 
