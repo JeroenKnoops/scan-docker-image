@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  anchore:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,4 +14,27 @@ jobs:
         with:
           image-reference: "alpine:latest"
       - name: anchore inline scan JSON results
-        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; don
+  tern:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fetch tern
+        run: git clone https://github.com/tern-tools/tern.git
+      - name: Build tern container
+        run: docker build . --file tern/Dockerfile --tag ternd
+      - name: Run scan debian:buster
+        run: |
+          mkdir -p ${{ github.workspace }}/artifact
+          cd tern
+          ./docker_run.sh workdir ternd "report -f json -i debian:buster" > ${{ github.workspace }}/artifact/debian.txt
+      - name: Run scan alpine 
+        run: |
+          mkdir -p ${{ github.workspace }}/artifact
+          cd tern
+          ./docker_run.sh workdir ternd "report -f json -i alpine:3.10.4" > ${{ github.workspace }}/artifact/alpine.txt
+      - uses: actions/upload-artifact@v2
+        with:
+          name: output
+          path: ${{ github.workspace }}/artifact
+
