@@ -12,12 +12,22 @@ jobs:
         uses: anchore/scan-action@v1.0.4
         with:
           image-reference: "alpine:latest"
+      - name: move to correct artifacts folder 
+        run: |
+          mkdir -p ./artifacts/alpine/
+          cp -r ./anchore-reports/*.json ./artifacts/alpine/
+
       - name: Scan image debian buster
         uses: anchore/scan-action@v1.0.4
         with:
           image-reference: "debian:buster"
+      - name: move to correct artifacts folder 
+        run: |
+          mkdir -p ./artifacts/debian/
+          cp -r ./anchore-reports/*.json ./artifacts/debian/
+
       - uses: actions/upload-artifact@v2
         with:
           name: anchore-output
-          path: anchore-reports
+          path: artifacts 
 
