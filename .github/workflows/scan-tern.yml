@@ -1,8 +1,7 @@
-name: scan
+name: scan tern
 
 on:
   push:
-    branches: [ master ]
 
 jobs:
   tern:

@@ -1,18 +1,21 @@
-name: scan
+name: scan anchore
 
 on:
   push:
-    branches: [ master ]
 
 jobs:
   anchore:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Scan image
+      - name: Scan image alpine
         uses: anchore/scan-action@v1.0.4
         with:
           image-reference: "alpine:latest"
+      - name: Scan image debian buster
+        uses: anchore/scan-action@v1.0.4
+        with:
+          image-reference: "debian:buster"
       - uses: actions/upload-artifact@v2
         with:
           name: anchore-output
