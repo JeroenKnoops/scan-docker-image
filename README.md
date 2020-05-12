@@ -1,2 +1,7 @@
 # scan-docker-image
-Test scan docker-image with anchore/scan-action
+
+Scan docker images with various sbom tools.
+
+## SBOM tools
+- anchore/scan-action
+- tern
